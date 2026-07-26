@@ -1,0 +1,44 @@
++-----------------------------------------------------------------------------------+
+|                                  USER / BROWSER                                  |
+|  - Web UI (HTML Form / Live Register Table / Chatbot Query Input)                 |
++-----------------------------------------------------------------------------------+
+                                   │                  ▲
+               HTTP Requests (POST / GET)            HTML Response (Rendered Page)
+                                   ▼                  │
++-----------------------------------------------------------------------------------+
+|                             FLASK WEB SERVER (app.py)                             |
+|                                                                                   |
+|  [Route Handlers]                                                                 |
+|   ├── GET /          ---> Reads dataset, calculates metrics, fetches predictions  |
+|   ├── POST /add      ---> Validates & appends new room/complaint entries         |
+|   └── POST /ask      ---> Normalizes text query, matches intent (NLP)             |
+|                                                                                   |
+|  [Logic & Processing Engine]                                                       |
+|   ├── Server-Side Validation & Logic Engine                                       |
+|   ├── Dynamic Derived Field Calculation (days_open = today - reported_date)       |
+|   └── Natural Language Processing (Trim, Lowercase, Keyword/Intent Matching)      |
++-----------------------------------------------------------------------------------+
+              │                                                │
+   Loads & Evaluates Risk                            Reads & Updates CSV
+              ▼                                                ▼
++---------------------------+                    +---------------------------+
+|    AI PREDICTION MODEL    |                    |       DATA STORAGE        |
+|     (delay_model.pkl)     |                    |       (dataset.csv)       |
+|                           |                    |                           |
+|  Scikit-Learn Decision    |                    | Contains 100+ room records|
+|  Tree Classifier          |                    | & complaint histories     |
+|  (Inputs: Complaint Type, |                    | (room_no, occupant, status|
+|   Block Location)         |                    |  reported_date, etc.)     |
++---------------------------+                    +---------------------------+
+              ▲                                                ▲
+       Trains Model On                                Reads CSV To
+       Seeded History                                 Train Model
+              │                                                │
+              +-----------------------+------------------------+
+                                      │
+                         +--------------------------+
+                         |    OFFLINE ML PIPELINE   |
+                         |                          |
+                         |  1. generate_data.py     |
+                         |  2. train_model.py       |
+                         +--------------------------+
