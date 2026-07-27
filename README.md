@@ -8,6 +8,8 @@ A hostel office manages room allocations and maintenance complaints manually usi
 
 ## Demo Video
    https://drive.google.com/file/d/17cU6ZCwbProTFej6voH8WMTftwKgorU6/view?usp=drivesdk
+## Modified demo video
+   https://drive.google.com/file/d/1TMyaiX8a_8MhLxD_-hfSXoHgZRKIda-z/view?usp=drivesdk
 
 ## How to Run Step-by-Step
 1. Install Python dependencies:
